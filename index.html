@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda de Josué y Abril - 2027</title>
+    
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ==========================================================================
+            VARIABLES Y ESTILOS BASE (NUEVA PALETA AZUL)
+            ========================================================================== */
+        :root {
+            --bg-color: #E9F1F7; /* Arctic Mist */
+            --blue-primary: #5D7896; /* Ocean Breeze */
+            --blue-dark: #87A8C6; /* Dusty Horizon */
+            --blue-light: #B7CCE3; /* Powder Blue */
+            --blue-whisper: #D6E6F2; /* Sky Whisper */
+            --silver-sage: #B9C6BE; /* Silver Sage */
+            --cream: #F6F3EC; /* Pearl Ivory */
+            --white: #FFFFFF;
+            --text-color: #5D7896; 
+            
+            --font-title: 'Playfair Display', serif;
+            --font-script: 'Great Vibes', cursive;
+            --font-body: 'Lora', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+        }
+
+        /* ==========================================================================
+            PANTALLA DEL SOBRE ANIMADO
+            ========================================================================== */
+        #envelope-screen {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100vh;
+            background-image: url('assets/10.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 1.2s ease;
+        }
+
+        #envelope-screen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(93, 120, 150, 0.4); /* Capa oscura azulada */
+            z-index: 1;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 340px;
+            height: 230px;
+            z-index: 2;
+            cursor: pointer;
+            perspective: 1000px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .envelope-wrapper:hover { 
+            transform: scale(1.08) translateY(-5px); 
+        }
+
+        .envelope-body {
+            position: absolute; 
+            inset: 0;
+            background-color: var(--white);
+            border-radius: 6px;
+            box-shadow: 0 25px 60px rgba(93, 120, 150, 0.3);
+            overflow: hidden;
+            border: 1px solid var(--blue-whisper);
+        }
+
+        .envelope-front {
+            position: absolute; 
+            inset: 0; 
+            z-index: 3;
+            border-left: 170px solid var(--cream);
+            border-right: 170px solid var(--cream);
+            border-bottom: 120px solid var(--bg-color);
+            border-top: 110px solid transparent;
+            pointer-events: none;
+        }
+
+        .envelope-flap {
+            position: absolute; 
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 170px solid transparent;
+            border-right: 170px solid transparent;
+            border-top: 130px solid var(--white);
+            transform-origin: top;
+            transition: transform 0.9s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+            z-index: 4;
+            filter: drop-shadow(0 5px 8px rgba(0,0,0,0.15));
+        }
+
+        .seal {
+            position: absolute;
+            top: -15px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--blue-primary), var(--blue-dark));
+            border: 2px solid var(--silver-sage);
+            border-radius: 50%;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            color: var(--cream); 
+            font-family: var(--font-title); 
+            font-size: 1.5rem;
+            z-index: 5; 
+            transition: opacity 0.4s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        .envelope-wrapper.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1; 
+            filter: none;
+        }
+        .envelope-wrapper.open .seal { 
+            opacity: 0; 
+        }
+
+        .envelope-text {
+            position: relative; 
+            z-index: 2;
+            color: var(--white); 
+            font-family: var(--font-sans);
+            font-size: 1rem; 
+            letter-spacing: 4px;
+            margin-top: 50px; 
+            text-transform: uppercase;
+            font-weight: 600;
+            text-shadow: 0 2px 8px rgba(93, 120, 150, 0.8);
+            animation: pulseText 2s infinite;
+        }
+
+        @keyframes pulseText {
+            0% { opacity: 0.6; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-3px); }
+            100% { opacity: 0.6; transform: translateY(0); }
+        }
+
+        /* ==========================================================================
+            BOTÓN DE AUDIO FLOTANTE
+            ========================================================================== */
+        #audio-btn {
+            position: fixed;
+            bottom: 25px; 
+            right: 25px;
+            background: linear-gradient(135deg, var(--blue-primary), var(--blue-dark));
+            color: var(--cream);
+            border: 2px solid var(--silver-sage); 
+            border-radius: 50%;
+            width: 55px; 
+            height: 55px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 9000;
+            box-shadow: 0 6px 25px rgba(93, 120, 150, 0.4);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: none; 
+            align-items: center; 
+            justify-content: center;
+        }
+        
+        #audio-btn:hover { 
+            transform: scale(1.15) rotate(10deg); 
+            background: var(--blue-dark); 
+        }
+
+        /* ==========================================================================
+            TRÍPTICO Y ESTRUCTURA GENERAL
+            ========================================================================== */
+        #invitation-content {
+            display: flex;
+            justify-content: center;
+            padding: 20px 10px;
+            visibility: hidden; 
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        .invitation-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px; 
+            max-width: 1200px; 
+            width: 100%;
+            background-color: var(--bg-color);
+            box-shadow: 0 25px 60px rgba(93, 120, 150, 0.25);
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .column {
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            padding: 40px 20px; 
+            text-align: center; 
+            position: relative; 
+            overflow: hidden;
+        }
+        
+        .column:not(:last-child) { 
+            border-right: 1px dashed rgba(185, 198, 190, 0.6); 
+        }
+
+        .fade-in {
+            opacity: 0; 
+            transform: translateY(40px) scale(0.95);
+            filter: blur(8px);
+            transition: opacity 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                        transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        filter 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        
+        .fade-in.visible { 
+            opacity: 1; 
+            transform: translateY(0) scale(1); 
+            filter: blur(0);
+        }
+
+        /* Tipografías y botones */
+        h1, h2, h3 { font-family: var(--font-title); font-weight: 400; color: var(--blue-primary); }
+        .script-text { font-family: var(--font-script); color: var(--blue-dark); }
+        
+        .divider { display: flex; align-items: center; justify-content: center; margin: 20px 0; color: var(--silver-sage); width: 100%; }
+        .divider::before, .divider::after { content: ""; height: 1px; width: 60px; background: linear-gradient(90deg, transparent, var(--silver-sage), transparent); margin: 0 15px; }
+
+        .btn {
+            display: inline-block; 
+            background: linear-gradient(135deg, var(--blue-primary), var(--blue-dark)); 
+            color: var(--cream);
+            padding: 14px 28px; 
+            text-decoration: none; 
+            font-family: var(--font-sans);
+            font-size: 0.9rem; 
+            letter-spacing: 2px; 
+            border-radius: 6px;
+            margin-top: 15px; 
+            border: 1px solid var(--silver-sage); 
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 20px rgba(93, 120, 150, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.25), transparent);
+            transform: skewX(-25deg);
+            animation: btnShine 4s infinite;
+        }
+
+        .btn:hover { 
+            background: var(--blue-dark); 
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(93, 120, 150, 0.3);
+        }
+
+        .elegant-box {
+            width: 100%; padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(185, 198, 190, 0.5);
+            border-radius: 12px; margin-top: 25px;
+            box-shadow: 0 8px 25px rgba(93, 120, 150, 0.06);
+            position: relative;
+        }
+
+        /* GLASSMORPHISM */
+        .glass-panel {
+            width: 100%;
+            padding: 35px 25px;
+            background: rgba(255, 255, 255, 0.5); 
+            backdrop-filter: blur(15px);          
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.9); 
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(93, 120, 150, 0.1); 
+            margin-top: 20px;
+        }
+
+        /* Fotografía principal y fotos repartidas */
+        .main-photo-wrapper, .scattered-photo-wrapper { margin: 15px 0; padding: 5px; width: 100%; display: flex; justify-content: center; }
+        .main-photo { 
+            width: 260px; 
+            height: 380px; 
+            object-fit: cover; 
+            border-radius: 130px; 
+            border: 5px solid var(--cream); 
+            box-shadow: 0 15px 35px rgba(93, 120, 150, 0.25), 0 0 0 2px var(--silver-sage); 
+            transition: transform 0.5s ease; 
+        }
+        .main-photo:hover { transform: scale(1.03); }
+
+        .scattered-photo {
+            width: 90%;
+            max-width: 320px;
+            height: auto;
+            border-radius: 8px;
+            border: 3px solid var(--white);
+            box-shadow: 0 12px 25px rgba(93, 120, 150, 0.2);
+            object-fit: cover;
+            margin: 20px 0;
+            transition: transform 0.5s ease;
+        }
+        .scattered-photo:hover { transform: scale(1.02); }
+
+        /* Textos Generales */
+        .intro-text { font-family: var(--font-sans); font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px; color: var(--blue-primary); font-weight: 500;}
+        
+        .names-title { 
+            font-size: 4.5rem;
+            line-height: 1.1; 
+            margin-bottom: 15px; 
+            color: var(--blue-primary); 
+        }
+        .names-title span { font-family: var(--font-script); font-size: 3rem; display: block; margin: 5px 0; color: var(--silver-sage); }
+        
+        .parents-section { margin: 20px 0; font-size: 0.95rem; line-height: 1.6; color: var(--text-color); }
+        .parents-section b { font-family: var(--font-sans); font-size: 0.8rem; color: var(--blue-primary); display: block; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
+        .parents-names { font-family: var(--font-script); font-size: 2.2rem; color: var(--blue-dark); line-height: 1.2; margin-bottom: 15px; }
+
+        .invite-text { font-family: var(--font-sans); font-size: 1.1rem; letter-spacing: 3px; margin-top: 25px; color: var(--blue-primary); font-weight: 500;}
+        .invite-boda { font-family: var(--font-script); font-size: 4.8rem; margin-bottom: 25px; color: var(--blue-dark); }
+
+        .message-section { margin-top: 30px; }
+        .message-section h3 { font-family: var(--font-script); font-size: 3rem; color: var(--blue-primary); margin-bottom: -5px; }
+        .message-section h4 { font-family: var(--font-sans); font-size: 0.95rem; letter-spacing: 3px; color: var(--blue-dark); margin-bottom: 15px; }
+        .message-section p { font-size: 1rem; line-height: 1.8; padding: 0 15px; font-style: italic; }
+
+        .save-date-title { font-family: var(--font-sans); font-size: 0.95rem; letter-spacing: 3px; margin-bottom: 5px; margin-top: 35px; color: var(--blue-primary); font-weight: 600;}
+        .save-date-date { font-family: var(--font-title); font-size: 3rem; color: var(--blue-dark); margin-bottom: 5px; font-weight: 600; }
+
+        .calendar-wrapper { width: 100%; max-width: 340px; margin: 20px auto; font-family: var(--font-sans); font-size: 0.95rem; }
+        .calendar-month { text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; font-weight: 600; color: var(--blue-primary); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
+        .calendar-header { font-weight: 600; color: var(--silver-sage); margin-bottom: 8px; font-size: 0.85rem; }
+        .calendar-day { padding: 10px 0; transition: all 0.3s ease; }
+        .calendar-day.highlight { background: linear-gradient(135deg, var(--blue-primary), var(--blue-dark)); color: var(--cream); border-radius: 50%; font-weight: bold; box-shadow: 0 5px 15px rgba(93, 120, 150, 0.5); transform: scale(1.1); }
+
+        #countdown-timer {
+            font-family: var(--font-sans); font-size: 1rem; letter-spacing: 3px;
+            color: var(--blue-primary); font-weight: 600;
+            margin: 35px 0; padding: 20px 0; width: 100%;
+            border-top: 1px solid rgba(185, 198, 190, 0.5); border-bottom: 1px solid rgba(185, 198, 190, 0.5);
+            display: flex; justify-content: center; gap: 25px;
+            background: linear-gradient(90deg, transparent, rgba(185, 198, 190, 0.2), transparent);
+        }
+
+        .dark-block {
+            background: linear-gradient(135deg, var(--blue-dark), var(--blue-primary)); color: var(--cream); width: 100%;
+            padding: 45px 25px; margin-top: 50px; position: relative; border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(93, 120, 150, 0.3);
+            border: 1px solid rgba(185, 198, 190, 0.3);
+        }
+        .dark-block h3, .dark-block h2, .dark-block p { color: var(--cream); }
+
+        .venue-element { 
+            width: 100%; max-width: 250px; height: auto; object-fit: contain; margin: 20px auto; 
+            animation: floatImage 4s ease-in-out infinite; filter: drop-shadow(0 15px 20px rgba(93, 120, 150, 0.15));
+        }
+        @keyframes floatImage { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
+
+        .venue-name { font-family: var(--font-script); font-size: 3rem; color: var(--blue-primary); margin-bottom: 5px; line-height: 1.1; }
+        .venue-address { font-family: var(--font-sans); font-size: 0.95rem; line-height: 1.6; color: var(--text-color); margin-bottom: 10px; }
+        .venue-time { font-family: var(--font-sans); font-weight: 600; font-size: 1.2rem; color: var(--blue-dark); margin: 5px 0 20px 0; letter-spacing: 1px; }
+
+        .dress-code-title { font-family: var(--font-sans); font-size: 0.95rem; letter-spacing: 3px; margin-bottom: 10px; }
+
+        /* Formularios */
+        .form-group { margin-bottom: 20px; text-align: left; width: 100%; }
+        .form-group label { display: block; font-family: var(--font-sans); font-size: 0.9rem; color: var(--blue-dark); margin-bottom: 8px; letter-spacing: 1.5px; font-weight: 600;}
+        .form-group input[type="text"], .form-group select, .form-group textarea {
+            width: 100%; padding: 14px; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(185, 198, 190, 0.7);
+            border-radius: 8px; font-family: var(--font-body); font-size: 1rem; color: var(--text-color); outline: none; transition: all 0.3s;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .form-group input[type="text"]:focus, .form-group select:focus, .form-group textarea:focus { 
+            border-color: var(--blue-primary); 
+            box-shadow: 0 0 15px rgba(93, 120, 150, 0.15), inset 0 2px 5px rgba(0,0,0,0.02); 
+            background: #ffffff; 
+        }
+
+        .map-iframe {
+            width: 100%;
+            height: 250px;
+            border-radius: 8px;
+            border: 2px solid var(--silver-sage);
+            margin-top: 15px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 992px) {
+            .invitation-container { grid-template-columns: 1fr; }
+            .column:not(:last-child) { border-right: none; border-bottom: 1px dashed rgba(185, 198, 190, 0.6); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- AUDIO -->
+    <audio id="bg-audio" loop>
+        <source src="assets/song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- PANTALLA DEL SOBRE -->
+    <div id="envelope-screen">
+        <div class="envelope-wrapper" onclick="openInvitation()">
+            <div class="envelope-front"></div>
+            <div class="envelope-flap">
+                <div class="seal">J&A</div>
+            </div>
+            <div class="envelope-body"></div>
+        </div>
+        <div class="envelope-text">Toca para abrir</div>
+    </div>
+
+    <!-- BOTÓN DE MÚSICA STICKY -->
+    <button id="audio-btn" onclick="toggleAudio()">
+        <i class="fa-solid fa-music" id="audio-icon"></i>
+    </button>
+
+    <!-- CONTENEDOR TRÍPTICO -->
+    <div id="invitation-content">
+        <div class="invitation-container">
+            
+            <!-- ================= COLUMNA 1 (NOVIOS) ================= -->
+            <div class="column">
+                <p class="intro-text fade-in">Juntos con<br>nuestras familias</p>
+                <div class="divider fade-in"><i class="fa-solid fa-heart" style="font-size: 0.8rem;"></i></div>
+                
+                <h1 class="names-title fade-in">JOSUÉ<span>y</span>ABRIL</h1>
+                
+                <div class="parents-section fade-in">
+                    <div style="margin-bottom: 15px;">
+                        <b>Padres de la Novia</b>
+                        <div class="parents-names" style="font-size: 1.8rem;">Abigail Cruz Perez<br>&<br>Arturo Lopez Ortega</div>
+                    </div>
+                    <div>
+                        <b>Padres del Novio</b>
+                        <div class="parents-names" style="font-size: 1.8rem;">Luz Maria Ramirez<br>&<br>David Placito Mejia</div>
+                    </div>
+                </div>
+
+                <p class="invite-text fade-in">TE INVITAMOS A<br>NUESTRA</p>
+                <div class="invite-boda fade-in">Boda</div>
+                
+                <!-- FOTO 1 -->
+                <div class="main-photo-wrapper fade-in">
+                    <img src="assets/1.jpg" alt="Josué y Abril" class="main-photo">
+                </div>
+
+                <div class="message-section fade-in">
+                    <h3>Nos casamos</h3>
+                    <h4>¡ESTAMOS FELICES!</h4>
+                    <div class="divider"><i class="fa-solid fa-heart" style="font-size: 0.8rem;"></i></div>
+                    <p>Agradecemos a Dios por permitirnos llegar hasta este momento tan especial y compartirlo con las personas que más amamos.</p>
+                </div>
+
+                <!-- FOTO 2 -->
+                <div class="scattered-photo-wrapper fade-in">
+                    <img src="assets/2.jpg" class="scattered-photo" alt="Momento especial">
+                </div>
+
+                <div class="save-date fade-in">
+                    <p class="save-date-title">RESERVA LA FECHA</p>
+                    <div class="save-date-date">02 &bull; 04 &bull; 2027</div>
+                    <p class="save-date-title">VIERNES</p>
+                </div>
+
+                <div class="calendar-wrapper fade-in">
+                    <div class="calendar-month">Abril 2027</div>
+                    <div class="calendar-grid calendar-header">
+                        <div>DOM</div><div>LUN</div><div>MAR</div><div>MIÉ</div><div>JUE</div><div>VIE</div><div>SÁB</div>
+                    </div>
+                    <div class="calendar-grid">
+                        <div></div><div></div><div></div><div></div><div class="calendar-day">1</div><div class="calendar-day highlight">2</div><div class="calendar-day">3</div>
+                        <div class="calendar-day">4</div><div class="calendar-day">5</div><div class="calendar-day">6</div><div class="calendar-day">7</div><div class="calendar-day">8</div><div class="calendar-day">9</div><div class="calendar-day">10</div>
+                        <div class="calendar-day">11</div><div class="calendar-day">12</div><div class="calendar-day">13</div><div class="calendar-day">14</div><div class="calendar-day">15</div><div class="calendar-day">16</div><div class="calendar-day">17</div>
+                        <div class="calendar-day">18</div><div class="calendar-day">19</div><div class="calendar-day">20</div><div class="calendar-day">21</div><div class="calendar-day">22</div><div class="calendar-day">23</div><div class="calendar-day">24</div>
+                        <div class="calendar-day">25</div><div class="calendar-day">26</div><div class="calendar-day">27</div><div class="calendar-day">28</div><div class="calendar-day">29</div><div class="calendar-day">30</div><div></div>
+                    </div>
+                </div>
+
+                <div id="countdown-timer" class="fade-in">
+                    <span><b id="dias">00</b> DÍAS</span>
+                    <span><b id="horas">00</b> HRS</span>
+                    <span><b id="minutos">00</b> MIN</span>
+                </div>
+
+                <button onclick="downloadICS()" class="btn fade-in"><i class="fa-regular fa-calendar-plus"></i> AGREGAR AL CALENDARIO</button>
+
+                <!-- FOTO 3 -->
+                <div class="scattered-photo-wrapper fade-in" style="margin-top: 35px;">
+                    <img src="assets/3.jpg" class="scattered-photo" alt="Nuestro amor">
+                </div>
+            </div>
+
+            <!-- ================= COLUMNA 2 (EVENTOS) ================= -->
+            <div class="column">
+                
+                <!-- FOTO 4 -->
+                <div class="scattered-photo-wrapper fade-in" style="margin-bottom: 20px;">
+                    <img src="assets/4.jpg" class="scattered-photo" alt="Detalle">
+                </div>
+
+                <!-- CEREMONIA -->
+                <h2 class="fade-in" style="font-size: 2.5rem; margin-bottom: 5px; margin-top: 20px;">CEREMONIA<br>RELIGIOSA</h2>
+                <div class="divider fade-in"><i class="fa-solid fa-church" style="font-size: 0.8rem;"></i></div>
+                
+                <div class="venue-name fade-in">Iglesia La Puerta Abierta</div>
+                <p class="venue-time fade-in">5:00 P.M.</p>
+                
+                <iframe class="map-iframe fade-in" src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3673.7388754120966!2d-109.93421992468802!3d22.95984197921772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjLCsDU3JzM1LjQiTiAxMDnCsDU1JzUzLjkiVw!5e0!3m2!1ses-419!2smx!4v1792379902683!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                
+                <a href="https://maps.app.goo.gl/tBSxYUfSiTVNrNzs9" target="_blank" class="btn fade-in" style="margin-bottom: 20px;"><i class="fa-solid fa-map-location-dot"></i> ABRIR EN GOOGLE MAPS</a>
+
+                <!-- FOTO 5 -->
+                <div class="scattered-photo-wrapper fade-in" style="margin-top: 30px;">
+                    <img src="assets/5.jpg" class="scattered-photo" alt="Detalle Boda">
+                </div>
+
+                <!-- RECEPCIÓN -->
+                <h2 class="fade-in" style="font-size: 2.5rem; margin-top: 50px;">RECEPCIÓN</h2>
+                <div class="divider fade-in"><i class="fa-solid fa-champagne-glasses" style="font-size: 0.8rem;"></i></div>
+                
+                <div class="venue-name fade-in">Mismo Lugar</div>
+                <p class="venue-time fade-in">6:30 P.M.</p>
+
+                <!-- FOTO 6 -->
+                <div class="scattered-photo-wrapper fade-in" style="margin-top: 30px;">
+                    <img src="assets/6.jpg" class="scattered-photo" alt="Recepcion">
+                </div>
+            </div>
+
+            <!-- ================= COLUMNA 3 (DETALLES Y RSVP) ================= -->
+            <div class="column">
+                
+                <div class="dark-block dress-code fade-in" style="margin-top: 0;">
+                    <p class="dress-code-title" style="color: var(--silver-sage);">CÓDIGO DE VESTIMENTA</p>
+                    <div class="divider"><i class="fa-solid fa-user-tie" style="font-size: 0.8rem; color: var(--silver-sage);"></i></div>
+                    <p style="font-family: var(--font-title); font-size: 2rem; margin-bottom: 15px;">Vestimenta de Gala</p>
+                </div>
+
+                <!-- FOTO 7 -->
+                <div class="scattered-photo-wrapper fade-in">
+                    <img src="assets/7.jpg" class="scattered-photo" alt="Elegancia">
+                </div>
+
+                <!-- HOSPEDAJE -->
+                <div class="elegant-box fade-in" style="text-align: center;">
+                    <h2 style="font-size: 2rem; margin-bottom: 5px;">HOSPEDAJE</h2>
+                    <div class="divider"><i class="fa-solid fa-bed" style="font-size: 0.8rem;"></i></div>
+                    <p style="margin-bottom: 15px; font-family: var(--font-sans); font-weight: 600; color: var(--blue-primary);">Hotel Santa Fe</p>
+                    <a href="https://www.sfcabo.com/?lng=es" target="_blank" class="btn" style="margin-bottom:10px; padding: 10px 15px; font-size: 0.8rem;"><i class="fa-solid fa-globe"></i> WEB</a>
+                    <a href="https://maps.app.goo.gl/kB2DqYKF5ty3HeEx8" target="_blank" class="btn" style="margin-bottom:10px; padding: 10px 15px; font-size: 0.8rem;"><i class="fa-solid fa-map-location-dot"></i> MAPA</a>
+                    
+                    <div style="margin: 20px 0; border-bottom: 1px dashed var(--silver-sage);"></div>
+                    
+                    <p style="margin-bottom: 15px; font-family: var(--font-sans); font-weight: 600; color: var(--blue-primary);">Hotel Socram GH</p>
+                    <a href="https://hotelsocramgh.com/" target="_blank" class="btn" style="margin-bottom:10px; padding: 10px 15px; font-size: 0.8rem;"><i class="fa-solid fa-globe"></i> WEB</a>
+                    <a href="https://maps.app.goo.gl/gWUPHecNYUAyhwGS6" target="_blank" class="btn" style="padding: 10px 15px; font-size: 0.8rem;"><i class="fa-solid fa-map-location-dot"></i> MAPA</a>
+                </div>
+
+                <!-- FOTO 8 -->
+                <div class="scattered-photo-wrapper fade-in">
+                    <img src="assets/8.jpg" class="scattered-photo" alt="Momentos">
+                </div>
+
+                <!-- GALERÍA EN VIVO -->
+                <div class="elegant-box fade-in" style="text-align: center;">
+                    <h2 style="font-size: 2.2rem; margin-bottom: 5px;">GALERÍA EN VIVO</h2>
+                    <div class="divider"><i class="fa-solid fa-camera-retro" style="font-size: 0.8rem;"></i></div>
+                    <p style="margin-bottom: 15px; line-height: 1.6;">Ayúdanos a capturar cada momento. Comparte con nosotros tus fotografías del evento.</p>
+                    <a href="https://drive.google.com/drive/folders/1yhiwSEdTAc95aohUnWzdE3uw-t9Hm4O4?usp=sharing" target="_blank" class="btn"><i class="fa-solid fa-cloud-arrow-up"></i> SUBIR FOTOS</a>
+                </div>
+
+                <!-- GLASSMORPHISM: RSVP -->
+                <div class="fade-in" style="width: 100%; margin-top: 50px;">
+                    <h2 style="font-size: 2.5rem;">ASISTENCIA</h2>
+                    <div class="divider"><i class="fa-regular fa-calendar-check" style="font-size: 0.8rem;"></i></div>
+                    
+                    <div class="glass-panel">
+                        <p style="font-size: 0.95rem; margin-bottom: 25px; font-style: italic; color: var(--blue-dark); font-weight: 500;">Fecha límite de confirmación:<br><b style="font-size: 1.2rem; font-family: var(--font-sans); color: var(--blue-primary);">20/02/2027</b></p>
+                        
+                        <form id="rsvpForm">
+                            <div class="form-group"><label>Nombre(s):</label><input type="text" id="rsvpNombre" placeholder="Ej. Juan"></div>
+                            <div class="form-group"><label>Apellido(s):</label><input type="text" id="rsvpApellido" placeholder="Ej. Pérez"></div>
+                            <div class="form-group">
+                                <label>¿Asistirás?:</label>
+                                <select id="rsvpAsistencia">
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="¡Sí, ahí estaré!">¡Sí, ahí estaré!</option>
+                                    <option value="Lamentablemente no podré asistir">Lamentablemente no podré asistir</option>
+                                </select>
+                            </div>
+                            
+                            <button type="button" onclick="sendRSVP()" class="btn" style="width: 100%; font-size: 1.05rem; font-weight: bold; padding: 16px; border-radius: 8px; margin-top: 15px;">
+                                <i class="fa-brands fa-whatsapp"></i> CONFIRMAR ASISTENCIA
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- FOTO 9 -->
+                <div class="scattered-photo-wrapper fade-in">
+                    <img src="assets/9.jpg" class="scattered-photo" alt="Romance">
+                </div>
+
+                <!-- GLASSMORPHISM: BUENOS DESEOS -->
+                <div class="fade-in" style="width: 100%; margin-top: 30px;">
+                    <h2 style="font-size: 2.5rem;">LIBRO DE FIRMAS</h2>
+                    <div class="divider"><i class="fa-solid fa-pen-fancy" style="font-size: 0.8rem;"></i></div>
+                    
+                    <div class="glass-panel" style="margin-top: 10px;">
+                        <form id="wishesForm">
+                            <div class="form-group">
+                                <label>Escribe un mensaje para los novios:</label>
+                                <textarea id="wishesText" rows="4" required placeholder="¡Felicidades en esta nueva etapa!"></textarea>
+                            </div>
+                            <button type="button" onclick="sendWishes()" class="btn" style="width: 100%; font-size: 1.05rem; font-weight: bold; padding: 16px; border-radius: 8px; margin-top: 15px;">
+                                <i class="fa-brands fa-whatsapp"></i> ENVIAR MENSAJE
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- FOTO 10 Y CIERRE -->
+                <div class="dark-block fade-in" style="margin-top: 60px; border-radius: 12px; padding: 35px 25px;">
+                    <h3 style="font-family: var(--font-script); font-size: 4.5rem; color: var(--silver-sage); margin-bottom: 15px;">¡Gracias!</h3>
+                    <p style="font-size: 1.15rem; margin-bottom: 25px; line-height: 1.6;">No podemos esperar para celebrar este gran día con ustedes.</p>
+                    
+                    <img src="assets/10.jpg" alt="Fin" class="scattered-photo" style="margin-top: 0; width: 100%; border: none; box-shadow: 0 8px 25px rgba(0,0,0,0.4);">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+        SCRIPTS
+        ========================================================================== -->
+    <script>
+        const audio = document.getElementById('bg-audio');
+        const audioIcon = document.getElementById('audio-icon');
+        const audioBtn = document.getElementById('audio-btn');
+        let envelopeOpened = false;
+
+        function openInvitation() {
+            if (envelopeOpened) return; 
+            envelopeOpened = true;
+
+            const envelopeScreen = document.getElementById('envelope-screen');
+            const envelopeWrapper = document.querySelector('.envelope-wrapper');
+            const invitationContent = document.getElementById('invitation-content');
+            
+            envelopeWrapper.classList.add('open');
+            
+            audio.play().then(() => {
+                audioIcon.classList.remove('fa-music');
+                audioIcon.classList.add('fa-pause');
+            }).catch(e => console.log("Auto-play prevenido", e));
+
+            setTimeout(() => {
+                envelopeScreen.style.opacity = '0';
+                invitationContent.style.visibility = 'visible';
+                invitationContent.style.opacity = '1';
+                audioBtn.style.display = 'flex'; 
+                
+                setTimeout(() => { envelopeScreen.style.display = 'none'; }, 1200);
+            }, 900); 
+        }
+
+        function toggleAudio() {
+            if(audio.paused) {
+                audio.play();
+                audioIcon.classList.remove('fa-music'); 
+                audioIcon.classList.add('fa-pause');
+            } else {
+                audio.pause();
+                audioIcon.classList.remove('fa-pause'); 
+                audioIcon.classList.add('fa-music');
+            }
+        }
+
+        // WhatsApp para confirmaciones e interacciones
+        const telefonoWhatsApp = "526241223580";
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Animaciones de scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.12 });
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+            // Countdown para el 2 de abril de 2027 a las 17:00 (5:00 PM)
+            const countDownDate = new Date("Apr 2, 2027 17:00:00").getTime();
+            const x = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("countdown-timer").innerHTML = "<span style='font-size: 1.3rem; text-align: center; width: 100%; color: var(--blue-primary);'>¡HOY ES EL GRAN DÍA!</span>";
+                    return;
+                }
+                
+                const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById("dias").innerHTML = d < 10 ? "0" + d : d;
+                document.getElementById("horas").innerHTML = h < 10 ? "0" + h : h;
+                document.getElementById("minutos").innerHTML = m < 10 ? "0" + m : m;
+            }, 1000);
+        });
+
+        // Lógica de RSVP y Deseos a WhatsApp
+        function sendRSVP() {
+            const nombre = document.getElementById('rsvpNombre').value.trim();
+            const apellido = document.getElementById('rsvpApellido').value.trim();
+            const asistencia = document.getElementById('rsvpAsistencia').value;
+
+            if(!nombre || !apellido || !asistencia) { 
+                alert("Por favor, completa tu nombre, apellido y estado de asistencia."); 
+                return; 
+            }
+            
+            let mensaje = `Hola, soy *${nombre} ${apellido}*.\n\nQuiero confirmar mi respuesta a la boda de Josué y Abril:\n*${asistencia}*`;
+            window.open(`https://wa.me/${telefonoWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        }
+
+        function sendWishes() {
+            const wishes = document.getElementById('wishesText').value.trim();
+            if(!wishes) { 
+                alert("Por favor, escribe un mensaje primero."); 
+                return; 
+            }
+            let mensaje = `¡Hola Josué y Abril! Les escribo para dejarles mis mejores deseos para su boda:\n\n"${wishes}"`;
+            window.open(`https://wa.me/${telefonoWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
+        }
+
+        // Descarga de calendario
+        function downloadICS() {
+            const calData = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Boda Josue y Abril//ES\nBEGIN:VEVENT\nDTSTART:20270402T230000Z\nDTEND:20270403T050000Z\nSUMMARY:Boda de Josué y Abril\nLOCATION:Iglesia La puerta abierta\nDESCRIPTION:¡Acompáñanos a celebrar nuestra boda!\nEND:VEVENT\nEND:VCALENDAR`;
+            const blob = new Blob([calData], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); 
+            a.href = url;
+            a.download = 'Boda_Josue_y_Abril.ics'; 
+            document.body.appendChild(a); 
+            a.click(); 
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>
