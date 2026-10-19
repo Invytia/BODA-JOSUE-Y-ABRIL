@@ -395,15 +395,8 @@
         }
         .dark-block h3, .dark-block h2, .dark-block p { color: var(--cream); }
 
-        .venue-element { 
-            width: 100%; max-width: 250px; height: auto; object-fit: contain; margin: 20px auto; 
-            animation: floatImage 4s ease-in-out infinite; filter: drop-shadow(0 15px 20px rgba(93, 120, 150, 0.15));
-        }
-        @keyframes floatImage { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
-
         .venue-name { font-family: var(--font-script); font-size: 3rem; color: var(--blue-primary); margin-bottom: 5px; line-height: 1.1; }
-        .venue-address { font-family: var(--font-sans); font-size: 0.95rem; line-height: 1.6; color: var(--text-color); margin-bottom: 10px; }
-        .venue-time { font-family: var(--font-sans); font-weight: 600; font-size: 1.2rem; color: var(--blue-dark); margin: 5px 0 20px 0; letter-spacing: 1px; }
+        .venue-time { font-family: var(--font-sans); font-weight: 600; font-size: 1.2rem; color: var(--blue-primary); margin: 5px 0 20px 0; letter-spacing: 1px; }
 
         .dress-code-title { font-family: var(--font-sans); font-size: 0.95rem; letter-spacing: 3px; margin-bottom: 10px; }
 
@@ -536,7 +529,7 @@
                 </div>
             </div>
 
-            <!-- ================= COLUMNA 2 (EVENTOS) ================= -->
+            <!-- ================= COLUMNA 2 (EVENTOS UNIFICADOS) ================= -->
             <div class="column">
                 
                 <!-- FOTO 4 -->
@@ -544,12 +537,19 @@
                     <img src="assets/4.jpg" class="scattered-photo" alt="Detalle">
                 </div>
 
-                <!-- CEREMONIA -->
-                <h2 class="fade-in" style="font-size: 2.5rem; margin-bottom: 5px; margin-top: 20px;">CEREMONIA<br>RELIGIOSA</h2>
-                <div class="divider fade-in"><i class="fa-solid fa-church" style="font-size: 0.8rem;"></i></div>
+                <!-- UBICACIÓN UNIFICADA -->
+                <h2 class="fade-in" style="font-size: 2.5rem; margin-bottom: 5px; margin-top: 20px;">UBICACIÓN</h2>
+                <div class="divider fade-in"><i class="fa-solid fa-location-dot" style="font-size: 0.8rem;"></i></div>
                 
                 <div class="venue-name fade-in">Iglesia La Puerta Abierta</div>
-                <p class="venue-time fade-in">5:00 P.M.</p>
+                
+                <div class="fade-in" style="margin: 25px 0;">
+                    <p style="font-family: var(--font-sans); font-size: 0.95rem; color: var(--blue-dark); font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Ceremonia Religiosa</p>
+                    <p class="venue-time" style="margin-top: 5px;">5:00 P.M.</p>
+                    
+                    <p style="font-family: var(--font-sans); font-size: 0.95rem; color: var(--blue-dark); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-top: 25px;">Recepción</p>
+                    <p class="venue-time" style="margin-top: 5px;">6:30 P.M.</p>
+                </div>
                 
                 <iframe class="map-iframe fade-in" src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3673.7388754120966!2d-109.93421992468802!3d22.95984197921772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjLCsDU3JzM1LjQiTiAxMDnCsDU1JzUzLjkiVw!5e0!3m2!1ses-419!2smx!4v1792379902683!5m2!1ses-419!2smx" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
                 
@@ -559,13 +559,6 @@
                 <div class="scattered-photo-wrapper fade-in" style="margin-top: 30px;">
                     <img src="assets/5.jpg" class="scattered-photo" alt="Detalle Boda">
                 </div>
-
-                <!-- RECEPCIÓN -->
-                <h2 class="fade-in" style="font-size: 2.5rem; margin-top: 50px;">RECEPCIÓN</h2>
-                <div class="divider fade-in"><i class="fa-solid fa-champagne-glasses" style="font-size: 0.8rem;"></i></div>
-                
-                <div class="venue-name fade-in">Mismo Lugar</div>
-                <p class="venue-time fade-in">6:30 P.M.</p>
 
                 <!-- FOTO 6 -->
                 <div class="scattered-photo-wrapper fade-in" style="margin-top: 30px;">
@@ -799,3 +792,4 @@
     </script>
 </body>
 </html>
+```<FollowUp>¿Hay algún otro detalle de diseño o comportamiento interactivo de la invitación que te gustaría personalizar?</FollowUp>
