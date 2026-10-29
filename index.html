@@ -355,6 +355,26 @@
             color: var(--blue-primary); 
         }
         .names-title span { font-family: var(--font-script); font-size: 3rem; display: block; margin: 5px 0; color: var(--silver-sage); }
+
+        /* Texto de honor / bendición */
+        .honor-text {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--blue-primary);
+            padding: 0 10px;
+            margin: 10px 0 20px 0;
+        }
+        .honor-text strong {
+            font-family: var(--font-sans);
+            font-style: normal;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--blue-dark);
+        }
         
         .parents-section { margin: 20px 0; font-size: 0.95rem; line-height: 1.6; color: var(--text-color); }
         .parents-section b { font-family: var(--font-sans); font-size: 0.8rem; color: var(--blue-primary); display: block; margin-bottom: 5px; letter-spacing: 2px; text-transform: uppercase; }
@@ -463,15 +483,20 @@
                 <div class="divider fade-in"><i class="fa-solid fa-heart" style="font-size: 0.8rem;"></i></div>
                 
                 <h1 class="names-title fade-in">JOSUÉ<span>y</span>ABRIL</h1>
+
+                <!-- TEXTO DE HONOR Y BENDICIÓN -->
+                <p class="honor-text fade-in">
+                    Tenemos el honor de invitarles a nuestra unión matrimonial, la cual será bendecida por el <strong>Pastor David Placito Mejía</strong>
+                </p>
                 
                 <div class="parents-section fade-in">
                     <div style="margin-bottom: 15px;">
-                        <b>Padres de la Novia</b>
-                        <div class="parents-names" style="font-size: 1.8rem;">Abigail Cruz Perez<br>&<br>Arturo Lopez Ortega</div>
+                        <b>Los Padres de los Novios</b>
+                        <div class="parents-names" style="font-size: 1.8rem;">Arturo Lopez Ortega<br>&<br>David Placito Mejia</div>
                     </div>
                     <div>
-                        <b>Padres del Novio</b>
-                        <div class="parents-names" style="font-size: 1.8rem;">Luz Maria Ramirez<br>&<br>David Placito Mejia</div>
+                        <b>Las Madres de los Novios</b>
+                        <div class="parents-names" style="font-size: 1.8rem;">Abigail Cruz Perez<br>&<br>Luz Maria Ramirez</div>
                     </div>
                 </div>
 
@@ -580,21 +605,6 @@
                     <img src="assets/7.jpg" class="scattered-photo" alt="Elegancia">
                 </div>
 
-                <!-- HOSPEDAJE -->
-                <div class="elegant-box fade-in" style="text-align: center;">
-                    <h2 style="font-size: 2rem; margin-bottom: 5px;">HOSPEDAJE</h2>
-                    <div class="divider"><i class="fa-solid fa-bed" style="font-size: 0.8rem;"></i></div>
-                    <p style="margin-bottom: 15px; font-family: var(--font-sans); font-weight: 600; color: var(--blue-primary);">Hotel Santa Fe</p>
-                    <a href="https://www.sfcabo.com/?lng=es" target="_blank" class="btn" style="margin-bottom:10px; padding: 10px 15px; font-size: 0.8rem;"><i class="fa-solid fa-globe"></i> WEB</a>
-                    <a href="https://maps.app.goo.gl/kB2DqYKF5ty3HeEx8" target="_blank" class="btn" style="margin-bottom:10px; padding: 10px 15px; font-size: 0.8rem;"><i class="fa-solid fa-map-location-dot"></i> MAPA</a>
-                    
-                    <div style="margin: 20px 0; border-bottom: 1px dashed var(--silver-sage);"></div>
-                    
-                    <p style="margin-bottom: 15px; font-family: var(--font-sans); font-weight: 600; color: var(--blue-primary);">Hotel Socram GH</p>
-                    <a href="https://hotelsocramgh.com/" target="_blank" class="btn" style="margin-bottom:10px; padding: 10px 15px; font-size: 0.8rem;"><i class="fa-solid fa-globe"></i> WEB</a>
-                    <a href="https://maps.app.goo.gl/gWUPHecNYUAyhwGS6" target="_blank" class="btn" style="padding: 10px 15px; font-size: 0.8rem;"><i class="fa-solid fa-map-location-dot"></i> MAPA</a>
-                </div>
-
                 <!-- FOTO 8 -->
                 <div class="scattered-photo-wrapper fade-in">
                     <img src="assets/8.jpg" class="scattered-photo" alt="Momentos">
@@ -638,24 +648,6 @@
                 <!-- FOTO 9 -->
                 <div class="scattered-photo-wrapper fade-in">
                     <img src="assets/9.jpg" class="scattered-photo" alt="Romance">
-                </div>
-
-                <!-- GLASSMORPHISM: BUENOS DESEOS -->
-                <div class="fade-in" style="width: 100%; margin-top: 30px;">
-                    <h2 style="font-size: 2.5rem;">LIBRO DE FIRMAS</h2>
-                    <div class="divider"><i class="fa-solid fa-pen-fancy" style="font-size: 0.8rem;"></i></div>
-                    
-                    <div class="glass-panel" style="margin-top: 10px;">
-                        <form id="wishesForm">
-                            <div class="form-group">
-                                <label>Escribe un mensaje para los novios:</label>
-                                <textarea id="wishesText" rows="4" required placeholder="¡Felicidades en esta nueva etapa!"></textarea>
-                            </div>
-                            <button type="button" onclick="sendWishes()" class="btn" style="width: 100%; font-size: 1.05rem; font-weight: bold; padding: 16px; border-radius: 8px; margin-top: 15px;">
-                                <i class="fa-brands fa-whatsapp"></i> ENVIAR MENSAJE
-                            </button>
-                        </form>
-                    </div>
                 </div>
 
                 <!-- FOTO 10 Y CIERRE -->
@@ -716,7 +708,7 @@
             }
         }
 
-        // WhatsApp para confirmaciones e interacciones
+        // WhatsApp para confirmaciones
         const telefonoWhatsApp = "526241223580";
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -752,7 +744,7 @@
             }, 1000);
         });
 
-        // Lógica de RSVP y Deseos a WhatsApp
+        // Lógica de RSVP a WhatsApp
         function sendRSVP() {
             const nombre = document.getElementById('rsvpNombre').value.trim();
             const apellido = document.getElementById('rsvpApellido').value.trim();
@@ -764,16 +756,6 @@
             }
             
             let mensaje = `Hola, soy *${nombre} ${apellido}*.\n\nQuiero confirmar mi respuesta a la boda de Josué y Abril:\n*${asistencia}*`;
-            window.open(`https://wa.me/${telefonoWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
-        }
-
-        function sendWishes() {
-            const wishes = document.getElementById('wishesText').value.trim();
-            if(!wishes) { 
-                alert("Por favor, escribe un mensaje primero."); 
-                return; 
-            }
-            let mensaje = `¡Hola Josué y Abril! Les escribo para dejarles mis mejores deseos para su boda:\n\n"${wishes}"`;
             window.open(`https://wa.me/${telefonoWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
         }
 
